@@ -15,9 +15,9 @@ interface TaskDao{
     @Delete
     suspend fun deleteTask(task:Task)
     @Query("SELECT * from tasks WHERE id = :id")
-    suspend fun selectTaskById(id: Int)
+    suspend fun selectTaskById(id: Int): Task
     @Query("SELECT * from tasks")
-    suspend fun selectAllTasks()
+    suspend fun selectAllTasks(): MutableList<Task>
     @Query("DELETE from tasks")
     suspend fun deleteAllTasks()
 

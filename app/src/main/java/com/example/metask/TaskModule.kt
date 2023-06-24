@@ -19,7 +19,7 @@ object TaskModule {
     @Provides
     fun provideTaskDao(database: TaskDatabase) = database.taskDao()
     @Provides
-    fun provideRepository() = RepositoryImpl()
+    fun provideRepository(taskDao:TaskDao) = RepositoryImpl(taskDao)
     @Provides
     fun provideViewModel(repository: RepositoryImpl) = TaskViewModel(repository)
 }

@@ -6,8 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "tasks")
 data class Task(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     @ColumnInfo
     var message: String,
     @ColumnInfo
@@ -19,5 +17,7 @@ data class Task(
     @ColumnInfo
     var order: Int,
     @ColumnInfo
-    var isCompleted: String
+    var isCompleted: String = "false",
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 )
