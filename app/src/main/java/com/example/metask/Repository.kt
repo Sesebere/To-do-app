@@ -10,5 +10,5 @@ interface Repository{
     suspend fun selectAllTasks(): MutableList<Task>
 
     suspend fun deleteTask(task:Task)
-    suspend fun deleteAllTasks(task:Task)
+    suspend fun deleteAllTasks()
 }

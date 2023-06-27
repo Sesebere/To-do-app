@@ -53,17 +53,21 @@ fun HomeScreen(viewModel: TaskViewModel, navController: NavHostController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        var tasks = remember{viewModel.tasks}
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.9f)
+                .padding(start = 10.dp, end = 15.dp)
+                .background(Color.LightGray)
         ) {
-            items(viewModel.tasks.value) { task ->
+            items(tasks) { task ->
                 var message = remember { mutableStateOf(task.message) }
                 var duration = remember { mutableStateOf(task.duration) }
                 var isCompleted = remember { mutableStateOf(task.isCompleted) }
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(25.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround,
@@ -77,12 +81,18 @@ fun HomeScreen(viewModel: TaskViewModel, navController: NavHostController) {
                         checked = if (isCompleted.value == "true") true else false,
                         onCheckedChange = {
                             if (isCompleted.value == "true") isCompleted.value =
-                                "false" else isCompleted.value = "true"
+                                "false" else {
+                                    viewModel.removeTask(task)
+                                    isCompleted.value = "true"
+                            }
                         },
                     )
                     IconButton(
                         modifier = Modifier.fillMaxWidth(0.1f),
-                        onClick = { viewModel.removeTask(task) }
+                        onClick = {
+                            viewModel.removeTask(task)
+//                            tasks.value.remove(task)
+                        }
                     ) {
                         Icon(Icons.Filled.Close, contentDescription = "Delete")
                     }
@@ -110,24 +120,12 @@ fun HomeScreen(viewModel: TaskViewModel, navController: NavHostController) {
                         placeholder = { Text("00:00") },
                         shape = RoundedCornerShape(30.dp)
                     )
-
                 }
             }
         }
-//        TextButton(
-//            onClick = { /* Do something! */ },
-//            modifier = Modifier.padding(16.dp).width(175.dp),
-////            elevation = ButtonDefaults.buttonElevation(5.dp),
-//            shape = RoundedCornerShape(30.dp),
-//            backgroundColor = Color.LightGray
-//            ) {
-//            Text(
-//                text = "Add task",
-//                color = Color.White
-//            )
-//        }
+
         TextButton(
-            onClick = { navController.navigate(route = Screen.TaskDetail.route) },
+            onClick = { navController.navigate(route = Screen.AddTask.route) },
             modifier = Modifier.padding(16.dp).width(200.dp),
             shape = RoundedCornerShape(30.dp),
             elevation = ButtonDefaults.buttonElevation(5.dp),

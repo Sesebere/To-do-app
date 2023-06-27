@@ -1,5 +1,6 @@
 package com.example.metask
 
+import AddTaskScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,7 +19,7 @@ fun SetupNavGraph(
             HomeScreen(viewModel, navController)
         }
         composable(route = Screen.AddTask.route) {
-            AddTaskScreen()
+            AddTaskScreen(viewModel, navController)
         }
     }
 }

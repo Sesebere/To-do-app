@@ -19,23 +19,13 @@ import javax.inject.Inject
 class TaskViewModel @Inject constructor(
     val repository: RepositoryImpl
 ): ViewModel(){
-//    lateinit var tasks: SnapshotStateList<Task>
-    lateinit var tasks: MutableState<MutableList<Task>>
+    lateinit var tasks: SnapshotStateList<Task>
     private lateinit var text: String
 
     init {
-//        tasks = mutableStateListOf<Task>()
-        tasks = mutableStateOf(mutableListOf())
-//        CoroutineScope(IO).launch{
-//            repository.insertTask(
-//                Task("go to space", Priority.HIGH,"A date","00:55",1,"true"))
-//            repository.insertTask(
-//                Task("go to space", Priority.HIGH,"A date","00:55",1,"true"))
-//
-//
-//            tasks.value = repository.selectAllTasks()
-//
-//        }
+
+        tasks = mutableStateListOf<Task>()
+
         viewModelScope.launch {
             val job1 = launch { repository.insertTask(
                 Task("go to space", Priority.HIGH, "A date", "00:55", 1, "true"))
@@ -43,17 +33,17 @@ class TaskViewModel @Inject constructor(
                     Task("go to space", Priority.HIGH, "A date", "00:55", 1, "true"))
             }
 
-            tasks.value = repository.selectAllTasks()
+            tasks.addAll(repository.selectAllTasks())
 
         }
 
     }
 
     fun removeTask(task: Task){
-        tasks.value.remove(task)
+        tasks.remove(task)
     }
     fun addTask(task: Task){
-        tasks.value.remove(task)
+        tasks.add(task)
     }
 
 

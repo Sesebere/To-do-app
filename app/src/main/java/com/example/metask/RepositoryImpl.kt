@@ -24,7 +24,7 @@ class RepositoryImpl(var taskDao:TaskDao): Repository {
         taskDao.deleteTask(task)
     }
 
-    override suspend fun deleteAllTasks(task: Task) {
+    override suspend fun deleteAllTasks() {
         taskDao.deleteAllTasks()
     }
 

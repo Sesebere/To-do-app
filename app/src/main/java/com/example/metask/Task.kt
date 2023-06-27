@@ -18,6 +18,8 @@ data class Task(
     var order: Int,
     @ColumnInfo
     var isCompleted: String = "false",
+    @ColumnInfo
+    var isRepetitive: String = "false",
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 )
